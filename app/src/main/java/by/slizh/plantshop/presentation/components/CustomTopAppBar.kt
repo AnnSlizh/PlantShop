@@ -15,27 +15,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import by.slizh.plantshop.R
 import by.slizh.plantshop.ui.theme.Black
 import by.slizh.plantshop.ui.theme.White
+import by.slizh.plantshop.ui.theme.mulishFamily
 
 @Composable
-fun CustomTopAppBar() {
+fun CustomTopAppBar(navController: NavController) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-          //  .padding(start = 20.dp, top = 16.dp, end = 20.dp)
+            //  .padding(start = 20.dp, top = 16.dp, end = 20.dp)
             .background(White)
     ) {
         IconButton(modifier = Modifier
             .width(50.dp)
             .height(50.dp),
-            onClick = { /*TODO()*/ }
+            onClick = { navController.popBackStack() }
         ) {
             Image(
                 painter = painterResource(id = R.drawable.back_icon),
@@ -46,8 +49,8 @@ fun CustomTopAppBar() {
         Text(
             text = "Details",
             color = Black,
-          //  fontFamily = mulishFamily,
-          //  fontWeight = FontWeight.Bold,
+              fontFamily = mulishFamily,
+              fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             modifier = Modifier.align(Alignment.CenterVertically)
         )

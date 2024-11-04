@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -34,28 +32,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import by.slizh.plantshop.R
 import by.slizh.plantshop.presentation.components.CustomTopAppBar
 import by.slizh.plantshop.presentation.components.PlantParameter
 import by.slizh.plantshop.ui.theme.DarkGray
-import by.slizh.plantshop.ui.theme.LightGreen
 import by.slizh.plantshop.ui.theme.Yellow
+import by.slizh.plantshop.ui.theme.mulishFamily
 import coil.compose.AsyncImage
 
 @Composable
-fun DetailsScreen() {
+fun DetailsScreen(navController: NavController, plantId: Int?) {
 
     var inCart by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, top = 16.dp, end = 20.dp)
+            .padding(start = 15.dp, top = 16.dp, end = 15.dp)
     ) {
-        CustomTopAppBar()
+        CustomTopAppBar(navController = navController)
 
         Spacer(modifier = Modifier.height(20.dp))
-        
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -81,20 +80,25 @@ fun DetailsScreen() {
         ) {
             Text(
                 text = "Peace Lily Plant",
-                fontSize = 24.sp
-                //  fontWeight = FontWeight.Bold
+                fontSize = 24.sp,
+                fontFamily = mulishFamily,
+                fontWeight = FontWeight.Bold
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.star),
+                    painter = painterResource(id = R.drawable.star_icon),
                     contentDescription = null,
                     tint = Yellow,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(text = "4.8")
+                Text(
+                    text = "4.8",
+                    fontFamily = mulishFamily,
+                    fontWeight = FontWeight.Normal
+                )
                 Spacer(modifier = Modifier.width(4.dp))
             }
         }
@@ -104,7 +108,9 @@ fun DetailsScreen() {
         Text(
             text = "Peace Lily (Spathiphyllum spp.) is a popular houseplant known for its elegant, deep green leaves and white flowers. It is native to the tropical rainforests of Central and South America, where it grows as an understory plant, meaning it thrives in low light conditions.",
             fontSize = 13.sp,
-            color = DarkGray
+            color = DarkGray,
+            fontFamily = mulishFamily,
+            fontWeight = FontWeight.Normal
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -130,6 +136,7 @@ fun DetailsScreen() {
             Text(
                 text = "$34.00",
                 fontSize = 24.sp,
+                fontFamily = mulishFamily,
                 fontWeight = FontWeight.Bold
             )
             Button(
@@ -138,17 +145,14 @@ fun DetailsScreen() {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Black,
                     contentColor = Color.White
-                ),
+                )
             ) {
-                Text(text = if (inCart) "Remove from Cart" else "Add to Cart")
+                Text(
+                    text = if (inCart) "Remove from Cart" else "Add to Cart",
+                    fontFamily = mulishFamily,
+                    fontWeight = FontWeight.Normal
+                )
             }
         }
     }
-}
-
-
-@Preview(showSystemUi = true)
-@Composable
-fun DetailsScreenPreview() {
-    DetailsScreen()
 }

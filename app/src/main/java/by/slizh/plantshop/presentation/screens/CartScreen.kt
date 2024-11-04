@@ -1,6 +1,5 @@
 package by.slizh.plantshop.presentation.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,22 +18,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import by.slizh.plantshop.presentation.components.PlantItemCart
+import by.slizh.plantshop.presentation.navigation.Screen
 import by.slizh.plantshop.ui.theme.Black
 import by.slizh.plantshop.ui.theme.White
+import by.slizh.plantshop.ui.theme.mulishFamily
 
 @Composable
-fun CartScreen() {
+fun CartScreen(navController: NavController) {
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, top = 16.dp, end = 20.dp)
+            .padding(start = 15.dp, top = 16.dp, end = 15.dp)
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
@@ -43,16 +43,26 @@ fun CartScreen() {
             Text(
                 text = "My Cart",
                 fontSize = 18.sp,
+                fontFamily = mulishFamily,
+                fontWeight = FontWeight.Bold
             )
         }
 
         Spacer(modifier = Modifier.height(20.dp))
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth().heightIn(max = 490.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = 490.dp)
         ) {
             items(5) { plant ->
-                PlantItemCart()
+                PlantItemCart(showDetailsPlant = {
+                    navController.navigate(
+                        Screen.DetailsScreen.createRoute(
+                            1
+                        )
+                    )
+                })
             }
         }
 
@@ -66,17 +76,18 @@ fun CartScreen() {
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            //      .padding(top = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Total:",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 22.sp,
+                fontFamily = mulishFamily,
+                fontWeight = FontWeight.Normal
             )
             Text(
-                text = "$100", fontSize = 24.sp,
+                text = "$100", fontSize = 22.sp,
+                fontFamily = mulishFamily,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -89,15 +100,13 @@ fun CartScreen() {
                 onClick = { /*TODO*/ }, shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(containerColor = Black, contentColor = White)
             ) {
-                Text(text = "Place order", fontSize = 18.sp)
+                Text(
+                    text = "Place order",
+                    fontSize = 18.sp,
+                    fontFamily = mulishFamily,
+                    fontWeight = FontWeight.Normal
+                )
             }
         }
-
     }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun CartScreenPreview() {
-    CartScreen()
 }

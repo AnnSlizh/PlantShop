@@ -1,6 +1,7 @@
 package by.slizh.plantshop.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,10 +35,11 @@ import by.slizh.plantshop.ui.theme.LightGreen
 import by.slizh.plantshop.ui.theme.Red
 import by.slizh.plantshop.ui.theme.White
 import by.slizh.plantshop.ui.theme.Yellow
+import by.slizh.plantshop.ui.theme.mulishFamily
 import coil.compose.AsyncImage
 
 @Composable
-fun PlantItemCart() {
+fun PlantItemCart(showDetailsPlant: () -> Unit) {
 
     Card(
         colors = CardDefaults.cardColors(containerColor = Gray),
@@ -48,7 +50,6 @@ fun PlantItemCart() {
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            // .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             AsyncImage(
@@ -58,7 +59,8 @@ fun PlantItemCart() {
                     .clip(RoundedCornerShape(20.dp))
                     .padding(start = 5.dp, top = 5.dp, bottom = 5.dp)
                     .width(100.dp)
-                    .height(140.dp),
+                    .height(140.dp)
+                    .clickable { showDetailsPlant() },
                 placeholder = painterResource(id = R.drawable.img),
             )
 
@@ -68,7 +70,13 @@ fun PlantItemCart() {
                     .padding(start = 10.dp, top = 20.dp)
                     .weight(1f)
             ) {
-                Text(text = "Peace Lily Plant", fontSize = 20.sp, color = Black)
+                Text(
+                    text = "Peace Lily Plant",
+                    fontSize = 20.sp,
+                    color = Black,
+                    fontFamily = mulishFamily,
+                    fontWeight = FontWeight.Normal
+                )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -76,6 +84,7 @@ fun PlantItemCart() {
                     text = "$34.00",
                     fontSize = 18.sp,
                     color = Black,
+                    fontFamily = mulishFamily,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(10.dp))
@@ -96,8 +105,3 @@ fun PlantItemCart() {
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun PlantItemCartPreview() {
-    PlantItemCart()
-}

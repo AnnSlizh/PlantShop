@@ -17,16 +17,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import by.slizh.plantshop.domain.Plant
 import by.slizh.plantshop.domain.plants
 import by.slizh.plantshop.presentation.components.CustomFilterChip
 import by.slizh.plantshop.presentation.components.PlantCard
+import by.slizh.plantshop.presentation.navigation.Screen
+import by.slizh.plantshop.ui.theme.mulishFamily
 
 @Composable
-fun CatalogScreen() {
+fun CatalogScreen(navController: NavController) {
 
     val titles = listOf("All", "Popular", "Indoor", "Outdoor")
     var selectedChip by remember { mutableStateOf<String?>(null) }
@@ -34,11 +38,12 @@ fun CatalogScreen() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, top = 16.dp, end = 20.dp)
+            .padding(start = 15.dp, top = 16.dp, end = 15.dp)
     ) {
 
         Text(
-            text = "Categories", fontSize = 25.sp
+            text = "Categories", fontSize = 25.sp, fontFamily = mulishFamily,
+            fontWeight = FontWeight.Bold,
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -60,22 +65,23 @@ fun CatalogScreen() {
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-          //  contentPadding = PaddingValues(16.dp)
         ) {
             items(plants) { plant ->
                 PlantCard(
                     plantName = plant.name,
-                    plantPrice = plant.price
+                    plantPrice = plant.price,
+                    showAddToCartButton = true,
+                    showDetailsPlant = {
+                        navController.navigate(
+                            Screen.DetailsScreen.createRoute(
+                                1
+                            )
+                        )
+                    }
                 )
             }
         }
 
     }
 
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun CatalogScreenPreview() {
-    CatalogScreen()
 }
