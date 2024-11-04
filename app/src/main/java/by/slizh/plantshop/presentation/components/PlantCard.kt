@@ -2,11 +2,14 @@ package by.slizh.plantshop.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -34,13 +37,16 @@ import by.slizh.plantshop.R
 import by.slizh.plantshop.ui.theme.Black
 import by.slizh.plantshop.ui.theme.LightGreen
 import by.slizh.plantshop.ui.theme.White
+import by.slizh.plantshop.ui.theme.mulishFamily
 import coil.compose.AsyncImage
 
 
 @Composable
 fun PlantCard(
     plantName: String,
-    plantPrice: String
+    plantPrice: String,
+    showAddToCartButton: Boolean,
+    showDetailsPlant: () -> Unit
 ) {
     var inCart by remember { mutableStateOf(false) }
 
@@ -55,58 +61,66 @@ fun PlantCard(
             modifier = Modifier
                 .padding(13.dp)
         ) {
-            AsyncImage(
-                model = R.drawable.img,
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(20.dp)),
-                placeholder = painterResource(id = R.drawable.placeholder),
-                alignment = Alignment.Center
-            )
 
-//            Image(
-//                painter = painterResource(id = R.drawable.img),
-//                contentDescription = null,
-//                modifier = Modifier
-//                    .fillMaxWidth(),
-//                contentScale = ContentScale.Crop
-//            )
+            Box(
+                modifier = Modifier
+                    .width(140.dp)
+                    .height(180.dp),
+            ) {
+                AsyncImage(
+                    model = R.drawable.img,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(20.dp))
+                        .clickable { showDetailsPlant() },
+                    placeholder = painterResource(id = R.drawable.placeholder),
+                    alignment = Alignment.Center
+                )
+            }
+
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = plantName,
                 fontSize = 15.sp,
-                color = Black
+                color = Black,
+                fontFamily = mulishFamily,
+                fontWeight = FontWeight.Normal
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = plantPrice,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
+                fontSize = 16.sp,
+                fontFamily = mulishFamily,
+                fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(
-                onClick = { inCart = !inCart },
-                shape = RoundedCornerShape(50),
-                colors = ButtonDefaults.buttonColors(containerColor = White, contentColor = Black)
-            ) {
-                Text(
-                    text = if (inCart) "Remove from Cart" else "Add to Cart",
-                    fontSize = 13.sp
-                )
+            if (showAddToCartButton) {
+
+                Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                    Button(
+                        onClick = { inCart = !inCart },
+                        shape = RoundedCornerShape(50),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = White,
+                            contentColor = Black
+                        )
+                    ) {
+                        Text(
+                            text = if (inCart) "Remove from Cart" else "Add to Cart",
+                            fontSize = 13.sp,
+                            fontFamily = mulishFamily,
+                            fontWeight = FontWeight.Normal
+                        )
+                    }
+                }
+
             }
         }
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun PlantCardPreview(
-
-) {
-    PlantCard("Peace Lily Plant", " $34.00")
-}
