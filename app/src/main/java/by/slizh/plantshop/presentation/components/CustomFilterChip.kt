@@ -8,15 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Red
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import by.slizh.plantshop.ui.theme.Black
 import by.slizh.plantshop.ui.theme.Gray
-import by.slizh.plantshop.ui.theme.Green
-import by.slizh.plantshop.ui.theme.LightGreen
 import by.slizh.plantshop.ui.theme.White
-import by.slizh.plantshop.ui.theme.mulishFamily
 
 @Composable
 fun CustomFilterChip(

@@ -90,12 +90,14 @@ fun PlantCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { inCart = !inCart},
+                onClick = { inCart = !inCart },
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(containerColor = White, contentColor = Black)
             ) {
-                Text(text = if (inCart) "Remove from Cart" else "Add to Cart",
-                    fontSize = 13.sp)
+                Text(
+                    text = if (inCart) "Remove from Cart" else "Add to Cart",
+                    fontSize = 13.sp
+                )
             }
         }
     }

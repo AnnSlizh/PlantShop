@@ -1,7 +1,6 @@
-package by.slizh.plantshop.presentation
+package by.slizh.plantshop.presentation.screens
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,14 +17,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.slizh.plantshop.domain.Plant
+import by.slizh.plantshop.domain.plants
 import by.slizh.plantshop.presentation.components.CustomFilterChip
 import by.slizh.plantshop.presentation.components.PlantCard
-import by.slizh.plantshop.ui.theme.mulishFamily
 
 @Composable
 fun CatalogScreen() {
@@ -33,19 +31,10 @@ fun CatalogScreen() {
     val titles = listOf("All", "Popular", "Indoor", "Outdoor")
     var selectedChip by remember { mutableStateOf<String?>(null) }
 
-    val plants = listOf(
-        Plant("Peace Lily Plant", "$34.00"),
-        Plant("Peace Lily Plant", "$34.00"),
-        Plant("Hoya linearis ", "$34.00"),
-        Plant("Peace Lily Plant Plant", "$34.00"),
-        Plant("Peace Lily Plant", "$34.00"),
-        Plant("Peace Lily Plant", "$34.00"),
-    )
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, top = 20.dp, end = 20.dp)
+            .padding(start = 20.dp, top = 16.dp, end = 20.dp)
     ) {
 
         Text(
