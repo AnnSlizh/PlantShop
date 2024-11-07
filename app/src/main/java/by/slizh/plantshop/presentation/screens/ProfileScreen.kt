@@ -12,27 +12,42 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.slizh.plantshop.domain.plants
 import by.slizh.plantshop.presentation.components.AccountCard
 import by.slizh.plantshop.presentation.components.PlantCard
 import by.slizh.plantshop.presentation.components.PlantItemCart
 import by.slizh.plantshop.presentation.navigation.Screen
+import by.slizh.plantshop.presentation.viewModels.authorization.AuthState
+import by.slizh.plantshop.presentation.viewModels.authorization.AuthViewModel
 import by.slizh.plantshop.ui.theme.mulishFamily
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(navController: NavController, authViewModel: AuthViewModel = hiltViewModel()) {
+
+    val authState by authViewModel.authState.collectAsState()
+
+    LaunchedEffect(authState) {
+        if (authState is AuthState.UnAuthenticated) {
+            navController.navigate(Screen.AuthorizationScreen.route) {
+                popUpTo(Screen.ProfileScreen.route) { inclusive = true }
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-        //  .padding(start = 20.dp, top = 16.dp)
     ) {
         Box(
             modifier = Modifier
@@ -49,7 +64,7 @@ fun ProfileScreen(navController: NavController) {
         }
 
         Spacer(modifier = Modifier.height(20.dp))
-        AccountCard()
+        AccountCard { authViewModel.signOut() }
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
