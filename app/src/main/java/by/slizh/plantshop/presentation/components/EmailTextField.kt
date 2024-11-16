@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import by.slizh.plantshop.ui.theme.Black
+import by.slizh.plantshop.ui.theme.DarkGray
 import by.slizh.plantshop.ui.theme.Gray
 import by.slizh.plantshop.ui.theme.Green
 import by.slizh.plantshop.ui.theme.LightGreen
@@ -39,6 +40,7 @@ fun EmailTextField(email: String, onEmailChange: (String) -> Unit) {
             containerColor = White,
             focusedBorderColor = Green,
             unfocusedBorderColor = Green,
+            unfocusedLabelColor = DarkGray,
             focusedLabelColor = Green,
             cursorColor = Black
         )

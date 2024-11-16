@@ -20,9 +20,9 @@ import by.slizh.plantshop.presentation.screens.AuthorizationScreen
 import by.slizh.plantshop.presentation.screens.CartScreen
 import by.slizh.plantshop.presentation.screens.CatalogScreen
 import by.slizh.plantshop.presentation.screens.DetailsScreen
-import by.slizh.plantshop.presentation.screens.LoginInScreen
 import by.slizh.plantshop.presentation.screens.ProfileScreen
-import by.slizh.plantshop.presentation.screens.RegistrationScreen
+import by.slizh.plantshop.presentation.screens.SignInScreen
+import by.slizh.plantshop.presentation.screens.SignUpScreen
 import by.slizh.plantshop.ui.theme.Green
 import by.slizh.plantshop.ui.theme.PlantShopTheme
 import by.slizh.plantshop.ui.theme.White
@@ -47,8 +47,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     containerColor = containerColor,
                     bottomBar = {
-                        if (currentRoute(navController) != Screen.DetailsScreen.route) {
-                            BottomNavigationBar(navController = navController)
+                        when (currentRoute(navController)) {
+                            Screen.CatalogScreen.route -> BottomNavigationBar(navController = navController)
+                            Screen.CartScreen.route -> BottomNavigationBar(navController = navController)
+                            Screen.ProfileScreen.route -> BottomNavigationBar(navController = navController)
                         }
                     }) { innerPadding ->
 
@@ -57,13 +59,13 @@ class MainActivity : ComponentActivity() {
                         startDestination = Screen.AuthorizationScreen.route,
                         Modifier.padding(innerPadding)
                     ) {
-                        composable(Screen.AuthorizationScreen.route) { AuthorizationScreen(
-                            navController = navController
-                        )}
-                        composable(Screen.LogInScreen.route) { LoginInScreen(navController) }
-                        composable(Screen.RegistrationScreen.route) { RegistrationScreen(
-                            navController = navController
-                        )}
+                        composable(Screen.AuthorizationScreen.route) {
+                            AuthorizationScreen(
+                                navController = navController
+                            )
+                        }
+                        composable(Screen.SignInScreen.route) { SignInScreen(navController) }
+                        composable(Screen.SignUpScreen.route) { SignUpScreen(navController) }
                         composable(Screen.CatalogScreen.route) { CatalogScreen(navController) }
                         composable(Screen.CartScreen.route) { CartScreen(navController) }
                         composable(Screen.ProfileScreen.route) { ProfileScreen(navController) }

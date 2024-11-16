@@ -97,7 +97,7 @@ fun AuthorizationScreen(
         ) {
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { navController.navigate(Screen.LogInScreen.route) },
+                onClick = { navController.navigate(Screen.SignInScreen.route) },
                 shape = RoundedCornerShape(40),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Gray,
@@ -123,7 +123,7 @@ fun AuthorizationScreen(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    navController.navigate(Screen.RegistrationScreen.route)
+                    navController.navigate(Screen.SignUpScreen.route)
                 },
                 shape = RoundedCornerShape(40),
                 colors = ButtonDefaults.buttonColors(

@@ -2,8 +2,11 @@ package by.slizh.plantshop.presentation.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,7 +45,7 @@ import by.slizh.plantshop.ui.theme.Green
 import by.slizh.plantshop.ui.theme.mulishFamily
 
 @Composable
-fun LoginInScreen(navController: NavController, authViewModel: AuthViewModel = hiltViewModel()) {
+fun SignInScreen(navController: NavController, authViewModel: AuthViewModel = hiltViewModel()) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -80,7 +83,7 @@ fun LoginInScreen(navController: NavController, authViewModel: AuthViewModel = h
             IconButton(modifier = Modifier
                 .width(50.dp)
                 .height(50.dp),
-                onClick = { navController.popBackStack() }
+                onClick = { navController.navigate(Screen.AuthorizationScreen.route) }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.back_icon),
@@ -118,6 +121,32 @@ fun LoginInScreen(navController: NavController, authViewModel: AuthViewModel = h
         Spacer(modifier = Modifier.height(20.dp))
 
         PasswordTextField(password, passwordVisible, { password = it }) { passwordVisible = it }
+
+        Spacer(modifier = Modifier.height(15.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Don't have account?",
+                fontSize = 16.sp,
+                color = Green,
+                fontFamily = mulishFamily,
+                fontWeight = FontWeight.Normal
+            )
+            Text(
+                modifier = Modifier
+                    .padding(start = 3.dp)
+                    .clickable { navController.navigate(Screen.SignUpScreen.route) },
+                text = "Sign Up",
+                fontSize = 16.sp,
+                color = Green,
+                fontFamily = mulishFamily,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
 
         Spacer(modifier = Modifier.height(70.dp))
 

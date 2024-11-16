@@ -28,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.slizh.plantshop.R
 import by.slizh.plantshop.ui.theme.Black
+import by.slizh.plantshop.ui.theme.DarkGray
+import by.slizh.plantshop.ui.theme.Gray
 import by.slizh.plantshop.ui.theme.Green
 import by.slizh.plantshop.ui.theme.LightGreen
 import by.slizh.plantshop.ui.theme.White
@@ -64,6 +66,7 @@ fun PasswordTextField(
             containerColor = White,
             focusedBorderColor = Green,
             unfocusedBorderColor = Green,
+            unfocusedLabelColor = DarkGray,
             focusedLabelColor = Green,
             cursorColor = Black
         )
