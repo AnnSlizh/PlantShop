@@ -1,7 +1,5 @@
 package by.slizh.plantshop.presentation.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -25,12 +22,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.slizh.plantshop.R
@@ -40,13 +33,14 @@ import by.slizh.plantshop.ui.theme.White
 import by.slizh.plantshop.ui.theme.mulishFamily
 import coil.compose.AsyncImage
 
-
 @Composable
 fun PlantCard(
     plantName: String,
     plantPrice: String,
+    plantPhoto: String,
     showAddToCartButton: Boolean,
-    showDetailsPlant: () -> Unit
+    showDetailsPlant: () -> Unit,
+    addToCart: () -> Unit
 ) {
     var inCart by remember { mutableStateOf(false) }
 
@@ -68,14 +62,13 @@ fun PlantCard(
                     .height(180.dp),
             ) {
                 AsyncImage(
-                    model = R.drawable.img,
+                    model = plantPhoto,
                     contentDescription = "",
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(20.dp))
                         .clickable { showDetailsPlant() },
                     placeholder = painterResource(id = R.drawable.placeholder),
-                    alignment = Alignment.Center
                 )
             }
 
@@ -103,7 +96,10 @@ fun PlantCard(
 
                 Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                     Button(
-                        onClick = { inCart = !inCart },
+                        onClick = {
+                            inCart = !inCart
+                            addToCart()
+                        },
                         shape = RoundedCornerShape(50),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = White,
@@ -112,13 +108,12 @@ fun PlantCard(
                     ) {
                         Text(
                             text = if (inCart) "Remove from Cart" else "Add to Cart",
-                            fontSize = 13.sp,
+                            fontSize = 11.sp,
                             fontFamily = mulishFamily,
                             fontWeight = FontWeight.Normal
                         )
                     }
                 }
-
             }
         }
     }
