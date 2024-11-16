@@ -39,7 +39,13 @@ import by.slizh.plantshop.ui.theme.mulishFamily
 import coil.compose.AsyncImage
 
 @Composable
-fun PlantItemCart(showDetailsPlant: () -> Unit) {
+fun PlantItemCart(
+    plantName: String,
+    plantPrice: Int,
+    plantPhoto: String,
+    showDetailsPlant: () -> Unit,
+    onRemoveFromCart: () -> Unit
+) {
 
     Card(
         colors = CardDefaults.cardColors(containerColor = Gray),
@@ -53,7 +59,7 @@ fun PlantItemCart(showDetailsPlant: () -> Unit) {
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             AsyncImage(
-                model = R.drawable.img,
+                model = plantPhoto,
                 contentDescription = "",
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
@@ -71,7 +77,7 @@ fun PlantItemCart(showDetailsPlant: () -> Unit) {
                     .weight(1f)
             ) {
                 Text(
-                    text = "Peace Lily Plant",
+                    text = plantName,
                     fontSize = 20.sp,
                     color = Black,
                     fontFamily = mulishFamily,
@@ -81,7 +87,7 @@ fun PlantItemCart(showDetailsPlant: () -> Unit) {
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "$34.00",
+                    text = "$$plantPrice",
                     fontSize = 18.sp,
                     color = Black,
                     fontFamily = mulishFamily,
@@ -91,7 +97,7 @@ fun PlantItemCart(showDetailsPlant: () -> Unit) {
             }
 
             IconButton(
-                onClick = {/*TODO*/ },
+                onClick = { onRemoveFromCart() },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Icon(
