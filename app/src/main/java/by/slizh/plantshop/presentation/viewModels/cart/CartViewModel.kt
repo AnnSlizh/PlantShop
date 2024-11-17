@@ -1,12 +1,14 @@
 package by.slizh.plantshop.presentation.viewModels.cart
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.slizh.plantshop.domain.model.Cart
 import by.slizh.plantshop.domain.model.Plant
+import by.slizh.plantshop.domain.model.Purchase
 import by.slizh.plantshop.domain.repository.CartRepository
+import by.slizh.plantshop.domain.repository.PurchaseRepository
 import by.slizh.plantshop.util.Resource
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,27 +22,29 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     private val cartRepository: CartRepository,
+    private val purchaseRepository: PurchaseRepository,
     private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
     private val _cartState = MutableStateFlow(CartState())
     val cartState: StateFlow<CartState> = _cartState.asStateFlow()
 
-    fun onEvent(event: CartEvent) {
+    fun onCartEvent(event: CartEvent) {
         when (event) {
             is CartEvent.LoadCart -> loadCart()
             is CartEvent.AddToCart -> addToCart(event.plant)
             is CartEvent.RemoveFromCart -> removeFromCart(event.cartId)
+            is CartEvent.ClearCart -> clearCart()
+            is CartEvent.PlaceOrder -> placeOrder()
         }
     }
 
-    private fun removeFromCart(cartId: String) {
+    private fun loadCart() {
         viewModelScope.launch(Dispatchers.IO) {
-            cartRepository.removeFromCart(cartId).collect { result ->
-                if (result is Resource.Success) {
-                    loadCart()
+            firebaseAuth.currentUser?.let { user ->
+                cartRepository.getCartPlants(user.uid).collect { result ->
+                    handleCartResult(result)
                 }
-                handleVoidResult(result)
             }
         }
     }
@@ -67,44 +71,89 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    private fun loadCart() {
+    private fun removeFromCart(cartId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            firebaseAuth.currentUser?.let { user ->
-                cartRepository.getCartPlants(user.uid).collect { result ->
-                    handleResult(result)
+            cartRepository.removeFromCart(cartId).collect { result ->
+                if (result is Resource.Success) {
+                    loadCart()
+                }
+                handleVoidResult(result)
+            }
+        }
+    }
+
+    private fun clearCart() {
+        val userId = firebaseAuth.currentUser?.uid ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            cartRepository.clearCart(userId).collect { result ->
+                handleVoidResult(result)
+                if (result is Resource.Success) {
+                    _cartState.value =
+                        _cartState.value.copy(cartPlants = emptyList(), isLoading = false)
                 }
             }
         }
     }
 
-    private fun handleResult(result: Resource<List<Cart>>) {
-        when (result) {
-            is Resource.Loading ->
-                _cartState.value = _cartState.value.copy(isLoading = result.isLoading)
+    private fun placeOrder() {
+        val userId = firebaseAuth.currentUser?.uid ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            val cartItems = cartState.value.cartPlants
+            if (cartItems.isEmpty()) return@launch
 
-            is Resource.Success ->
+            val plantNames = cartItems.map { it.plantName }
+            val totalPrice = cartItems.sumOf { it.plantPrice }
+
+            val purchase = Purchase(
+                id = UUID.randomUUID().toString(),
+                totalPrice = totalPrice,
+                date = Timestamp.now(),
+                userId = userId,
+                plantNames = plantNames
+            )
+
+            purchaseRepository.addPurchase(purchase).collect { result ->
+                if (result is Resource.Success) {
+                    loadCart()
+                }
+                handleVoidResult(result)
+            }
+        }
+    }
+
+    private fun handleCartResult(result: Resource<List<Cart>>) {
+        when (result) {
+            is Resource.Loading -> {
+                _cartState.value = _cartState.value.copy(isLoading = result.isLoading)
+            }
+
+            is Resource.Success -> {
                 _cartState.value = _cartState.value.copy(
                     cartPlants = result.data ?: emptyList(),
                     isLoading = false
                 )
+            }
 
-            is Resource.Error ->
+            is Resource.Error -> {
                 _cartState.value = _cartState.value.copy(error = result.message, isLoading = false)
-
+            }
         }
     }
 
     private fun handleVoidResult(result: Resource<Void>) {
         when (result) {
-            is Resource.Loading -> _cartState.value =
-                _cartState.value.copy(isLoading = result.isLoading)
+            is Resource.Loading -> {
+                _cartState.value = _cartState.value.copy(isLoading = result.isLoading)
+            }
 
             is Resource.Success -> {
                 _cartState.value = _cartState.value.copy(isLoading = false)
             }
 
-            is Resource.Error -> _cartState.value =
-                _cartState.value.copy(error = result.message, isLoading = false)
+            is Resource.Error -> {
+                _cartState.value = _cartState.value.copy(error = result.message, isLoading = false)
+            }
         }
     }
 }
+

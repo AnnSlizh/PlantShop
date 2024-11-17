@@ -19,7 +19,7 @@ class CartRepositoryImpl(
         flow {
             emit(Resource.Loading())
             try {
-                val document = cartCollection.document(cart.id.toString())
+                val document = cartCollection.document(cart.id)
                 document.set(cart).await()
                 emit(Resource.Success(null))
             } catch (e: Exception) {
@@ -31,7 +31,7 @@ class CartRepositoryImpl(
         flow {
             emit(Resource.Loading())
             try {
-                val document = cartCollection.document(cartId.toString())
+                val document = cartCollection.document(cartId)
                 document.delete().await()
                 emit(Resource.Success(null))
             } catch (e: Exception) {
@@ -48,6 +48,20 @@ class CartRepositoryImpl(
                 emit(Resource.Success(cartItems))
             } catch (e: Exception) {
                 emit(Resource.Error(e.message ?: "Unknown error"))
+            }
+        }
+
+    override suspend fun clearCart(userId: String): Flow<Resource<Void>> =
+        flow {
+            emit(Resource.Loading())
+            try {
+                val cartItems = cartCollection.whereEqualTo("userId", userId).get().await()
+                for (document in cartItems.documents) {
+                    document.reference.delete().await()
+                }
+                emit(Resource.Success(null))
+            } catch (e: Exception) {
+                emit(Resource.Error(e.localizedMessage ?: "Error clearing cart"))
             }
         }
 }

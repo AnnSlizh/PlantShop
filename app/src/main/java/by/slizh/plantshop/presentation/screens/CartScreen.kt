@@ -45,7 +45,7 @@ fun CartScreen(navController: NavController, cartViewModel: CartViewModel = hilt
     val cartState by cartViewModel.cartState.collectAsState()
 
     LaunchedEffect(Unit) {
-        cartViewModel.onEvent(CartEvent.LoadCart)
+        cartViewModel.onCartEvent(CartEvent.LoadCart)
     }
 
     Column(
@@ -97,7 +97,7 @@ fun CartScreen(navController: NavController, cartViewModel: CartViewModel = hilt
                             )
                         },
                         onRemoveFromCart = {
-                            cartViewModel.onEvent(CartEvent.RemoveFromCart(cartItem.id))
+                            cartViewModel.onCartEvent(CartEvent.RemoveFromCart(cartItem.id))
                         })
                 }
             }
@@ -135,7 +135,9 @@ fun CartScreen(navController: NavController, cartViewModel: CartViewModel = hilt
         Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { /*TODO*/ }, shape = RoundedCornerShape(50),
+                onClick = {  cartViewModel.onCartEvent(CartEvent.PlaceOrder)
+                     cartViewModel.onCartEvent(CartEvent.ClearCart)},
+                shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(containerColor = Black, contentColor = White)
             ) {
                 Text(
