@@ -112,7 +112,6 @@ fun SignUpScreen(
             fontFamily = mulishFamily,
             fontWeight = FontWeight.Normal
         )
-        //   }
         Spacer(modifier = Modifier.height(15.dp))
 
         EmailTextField(email) { email = it }

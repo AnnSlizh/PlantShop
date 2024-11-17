@@ -94,11 +94,6 @@ fun SignInScreen(navController: NavController, authViewModel: AuthViewModel = hi
 
         Spacer(modifier = Modifier.height(50.dp))
 
-//        Box(
-//            modifier = Modifier
-//                .fillMaxWidth(),
-//            contentAlignment = Alignment.Center
-//        ) {
         Text(
             text = "Welcome Back", fontSize = 30.sp, color = Black, fontFamily = mulishFamily,
             fontWeight = FontWeight.Bold
@@ -113,7 +108,6 @@ fun SignInScreen(navController: NavController, authViewModel: AuthViewModel = hi
             fontFamily = mulishFamily,
             fontWeight = FontWeight.Normal
         )
-        //   }
         Spacer(modifier = Modifier.height(15.dp))
 
         EmailTextField(email) { email = it }
