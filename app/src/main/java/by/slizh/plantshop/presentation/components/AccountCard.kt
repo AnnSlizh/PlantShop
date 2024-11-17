@@ -43,7 +43,7 @@ import by.slizh.plantshop.ui.theme.mulishFamily
 import coil.compose.AsyncImage
 
 @Composable
-fun AccountCard() {
+fun AccountCard(userEmail: String, signOut: () -> Unit) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Green),
         modifier = Modifier
@@ -89,7 +89,7 @@ fun AccountCard() {
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "momomomomo@gmail.com",
+                    text = userEmail,
                     fontSize = 14.sp,
                     color = Black,
                     fontFamily = mulishFamily,
@@ -98,7 +98,7 @@ fun AccountCard() {
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { signOut() },
                     shape = RoundedCornerShape(50),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = White,
@@ -106,7 +106,7 @@ fun AccountCard() {
                     )
                 ) {
                     Text(
-                        text = "Log out",
+                        text = "Sign Out",
                         fontSize = 13.sp,
                         fontFamily = mulishFamily,
                         fontWeight = FontWeight.Normal
@@ -117,9 +117,3 @@ fun AccountCard() {
     }
 }
 
-
-@Preview(showSystemUi = true)
-@Composable
-fun AccountCardPreview() {
-    AccountCard()
-}
