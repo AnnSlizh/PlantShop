@@ -1,4 +1,4 @@
-package by.slizh.plantshop.presentation.components
+package by.slizh.plantshop.presentation.components.cards
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -107,7 +107,7 @@ fun PlantCard(
                         )
                     ) {
                         Text(
-                            text = if (inCart) "Remove from Cart" else "Add to Cart",
+                            text = if (inCart) "In Cart" else "Add to Cart",
                             fontSize = 11.sp,
                             fontFamily = mulishFamily,
                             fontWeight = FontWeight.Normal

@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.slizh.plantshop.presentation.components.CustomFilterChip
-import by.slizh.plantshop.presentation.components.PlantCard
+import by.slizh.plantshop.presentation.components.cards.PlantCard
 import by.slizh.plantshop.presentation.navigation.Screen
 import by.slizh.plantshop.presentation.viewModels.authorization.AuthViewModel
 import by.slizh.plantshop.presentation.viewModels.cart.CartEvent

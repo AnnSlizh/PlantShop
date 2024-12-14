@@ -1,9 +1,7 @@
-package by.slizh.plantshop.presentation.components
+package by.slizh.plantshop.presentation.components.cards
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,19 +20,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.slizh.plantshop.R
 import by.slizh.plantshop.ui.theme.Black
 import by.slizh.plantshop.ui.theme.Gray
-import by.slizh.plantshop.ui.theme.LightGreen
 import by.slizh.plantshop.ui.theme.Red
-import by.slizh.plantshop.ui.theme.White
-import by.slizh.plantshop.ui.theme.Yellow
 import by.slizh.plantshop.ui.theme.mulishFamily
 import coil.compose.AsyncImage
 

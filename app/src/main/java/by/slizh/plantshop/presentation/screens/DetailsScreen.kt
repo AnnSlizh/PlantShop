@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.slizh.plantshop.R
-import by.slizh.plantshop.presentation.components.CustomTopAppBar
+import by.slizh.plantshop.presentation.components.bars.CustomTopAppBar
 import by.slizh.plantshop.presentation.components.PlantParameter
 import by.slizh.plantshop.presentation.viewModels.authorization.AuthViewModel
 import by.slizh.plantshop.presentation.viewModels.cart.CartEvent
@@ -188,14 +188,13 @@ fun DetailsScreen(
                         )
                     ) {
                         Text(
-                            text = if (inCart) "Remove from Cart" else "Add to Cart",
+                            text = if (inCart) "In Cart" else "Add to Cart",
                             fontFamily = mulishFamily,
                             fontWeight = FontWeight.Normal
                         )
                     }
                 }
             }
-
         }
     }
 }

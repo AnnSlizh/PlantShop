@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import by.slizh.plantshop.presentation.components.PlantItemCart
+import by.slizh.plantshop.presentation.components.cards.PlantItemCart
 import by.slizh.plantshop.presentation.navigation.Screen
 import by.slizh.plantshop.presentation.viewModels.cart.CartEvent
 import by.slizh.plantshop.presentation.viewModels.cart.CartViewModel
