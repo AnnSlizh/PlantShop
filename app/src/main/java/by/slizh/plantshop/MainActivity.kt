@@ -7,22 +7,28 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import by.slizh.plantshop.presentation.components.BottomNavigationBar
-import by.slizh.plantshop.presentation.components.currentRoute
+import by.slizh.plantshop.presentation.components.bars.BottomNavigationBar
+import by.slizh.plantshop.presentation.components.bars.currentRoute
 import by.slizh.plantshop.presentation.navigation.Screen
 import by.slizh.plantshop.presentation.screens.AuthorizationScreen
 import by.slizh.plantshop.presentation.screens.CartScreen
 import by.slizh.plantshop.presentation.screens.CatalogScreen
 import by.slizh.plantshop.presentation.screens.DetailsScreen
+import by.slizh.plantshop.presentation.screens.ProfileDetailsScreen
 import by.slizh.plantshop.presentation.screens.ProfileScreen
 import by.slizh.plantshop.presentation.screens.SignInScreen
 import by.slizh.plantshop.presentation.screens.SignUpScreen
+import by.slizh.plantshop.presentation.viewModels.authorization.AuthState
+import by.slizh.plantshop.presentation.viewModels.authorization.AuthViewModel
 import by.slizh.plantshop.ui.theme.Green
 import by.slizh.plantshop.ui.theme.PlantShopTheme
 import by.slizh.plantshop.ui.theme.White
@@ -43,6 +49,9 @@ class MainActivity : ComponentActivity() {
                     else -> White
                 }
 
+                val authViewModel: AuthViewModel = hiltViewModel()
+                val authState by authViewModel.authState.collectAsState()
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     containerColor = containerColor,
@@ -56,7 +65,8 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.AuthorizationScreen.route,
+                        startDestination = if (authState is AuthState.Authenticated) Screen.CatalogScreen.route
+                        else Screen.AuthorizationScreen.route,
                         Modifier.padding(innerPadding)
                     ) {
                         composable(Screen.AuthorizationScreen.route) {
@@ -69,6 +79,7 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.CatalogScreen.route) { CatalogScreen(navController) }
                         composable(Screen.CartScreen.route) { CartScreen(navController) }
                         composable(Screen.ProfileScreen.route) { ProfileScreen(navController) }
+                        composable(Screen.ProfileDetailsScreen.route) { ProfileDetailsScreen(navController) }
                         composable(
                             route = Screen.DetailsScreen.route,
                             arguments = listOf(navArgument("plantId") { type = NavType.IntType })

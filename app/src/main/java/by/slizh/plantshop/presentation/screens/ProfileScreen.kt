@@ -17,16 +17,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import by.slizh.plantshop.presentation.components.AccountCard
-import by.slizh.plantshop.presentation.components.PurchaseCard
+import by.slizh.plantshop.presentation.components.cards.AccountCard
+import by.slizh.plantshop.presentation.components.cards.PurchaseCard
 import by.slizh.plantshop.presentation.navigation.Screen
 import by.slizh.plantshop.presentation.viewModels.authorization.AuthState
 import by.slizh.plantshop.presentation.viewModels.authorization.AuthViewModel
 import by.slizh.plantshop.presentation.viewModels.purchase.PurchaseViewModel
+import by.slizh.plantshop.presentation.viewModels.purchase.UserPurchaseEvent
 import by.slizh.plantshop.ui.theme.Green
 import by.slizh.plantshop.ui.theme.Red
 import by.slizh.plantshop.ui.theme.mulishFamily
@@ -46,6 +48,8 @@ fun ProfileScreen(
             navController.navigate(Screen.AuthorizationScreen.route) {
                 popUpTo(Screen.ProfileScreen.route) { inclusive = true }
             }
+        } else {
+            purchaseViewModel.onUserPurchaseEvent(UserPurchaseEvent.LoadPurchases)
         }
     }
 
@@ -69,7 +73,13 @@ fun ProfileScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
         if (userEmail != null) {
-            AccountCard(userEmail) { authViewModel.signOut() }
+            AccountCard(
+                userEmail = userEmail,
+                onProfileDetailsClick = {
+                    navController.navigate(Screen.ProfileDetailsScreen.route)
+                },
+                signOut = { authViewModel.signOut() }
+            )
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -111,5 +121,6 @@ fun ProfileScreen(
         }
     }
 }
+
 
 

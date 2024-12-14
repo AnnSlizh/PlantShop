@@ -1,4 +1,4 @@
-package by.slizh.plantshop.presentation.components
+package by.slizh.plantshop.presentation.components.bars
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -14,7 +14,6 @@ import by.slizh.plantshop.presentation.navigation.Screen
 import by.slizh.plantshop.ui.theme.Black
 import by.slizh.plantshop.ui.theme.DarkGray
 import by.slizh.plantshop.ui.theme.Green
-import by.slizh.plantshop.ui.theme.Red
 import by.slizh.plantshop.ui.theme.White
 
 @Composable
