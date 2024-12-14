@@ -45,13 +45,13 @@ fun AuthorizationScreen(
 ) {
     val authState by authViewModel.authState.collectAsState()
 
-    LaunchedEffect(authState) {
-        if (authState is AuthState.Authenticated) {
-            navController.navigate(Screen.CatalogScreen.route) {
-                popUpTo(Screen.AuthorizationScreen.route) { inclusive = true }
-            }
-        }
-    }
+//    LaunchedEffect(authState) {
+//        if (authState is AuthState.Authenticated) {
+//            navController.navigate(Screen.CatalogScreen.route) {
+//                popUpTo(Screen.AuthorizationScreen.route) { inclusive = true }
+//            }
+//        }
+//    }
 
     Column(
         modifier = Modifier

@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.slizh.plantshop.R
-import by.slizh.plantshop.presentation.components.EmailTextField
-import by.slizh.plantshop.presentation.components.PasswordTextField
+import by.slizh.plantshop.presentation.components.textFields.EmailTextField
+import by.slizh.plantshop.presentation.components.textFields.PasswordTextField
 import by.slizh.plantshop.presentation.navigation.Screen
 import by.slizh.plantshop.presentation.viewModels.authorization.AuthState
 import by.slizh.plantshop.presentation.viewModels.authorization.AuthViewModel
@@ -74,7 +74,6 @@ fun SignUpScreen(
             else -> Unit
         }
     }
-
 
     Column(
         modifier = Modifier

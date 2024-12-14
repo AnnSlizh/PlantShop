@@ -3,9 +3,11 @@ package by.slizh.plantshop.di
 import by.slizh.plantshop.data.repository.CartRepositoryImpl
 import by.slizh.plantshop.data.repository.PlantRepositoryImpl
 import by.slizh.plantshop.data.repository.PurchaseRepositoryImpl
+import by.slizh.plantshop.data.repository.UserRepositoryImpl
 import by.slizh.plantshop.domain.repository.CartRepository
 import by.slizh.plantshop.domain.repository.PlantRepository
 import by.slizh.plantshop.domain.repository.PurchaseRepository
+import by.slizh.plantshop.domain.repository.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -45,4 +47,12 @@ object AuthModule {
         firebaseAuth: FirebaseAuth
     ): PurchaseRepository =
         PurchaseRepositoryImpl(firestore, firebaseAuth)
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(
+        firestore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth
+    ): UserRepository =
+        UserRepositoryImpl(firestore, firebaseAuth)
 }
