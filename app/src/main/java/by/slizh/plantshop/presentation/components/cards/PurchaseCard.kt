@@ -1,4 +1,4 @@
-package by.slizh.plantshop.presentation.components
+package by.slizh.plantshop.presentation.components.cards
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

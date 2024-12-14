@@ -24,7 +24,13 @@ class PurchaseViewModel @Inject constructor(
     val userPurchasesState: StateFlow<UserPurchasesState> = _userPurchasesState.asStateFlow()
 
     init {
-        loadPurchases()
+        onUserPurchaseEvent(UserPurchaseEvent.LoadPurchases)
+    }
+
+    fun onUserPurchaseEvent(event: UserPurchaseEvent) {
+        when (event) {
+            is UserPurchaseEvent.LoadPurchases -> loadPurchases()
+        }
     }
 
     private fun loadPurchases() {
